@@ -146,7 +146,7 @@ introCaptions <- c(
   "Tasmania's next largest city is Launceston, and the most advantaged community in Launceston is the centre of the city. The people of Launceston's city centre can expect about the same levels of chronic disease, compared to Taroona - Bonnet Hill.",
   "Just 4 kilometres away from Launceston's city centre is Ravenswood. Ravenswood is Tasmania's most disadvantaged community, across a range of socio-economic indicators. People in Ravenswood can expect many more people in their community to suffer with chronic diseases.",
   "Western Australia is the nation's largest state by area, but the story is the same. Where people live has a strong relationship with their health outcomes.",
-  "Across the country, people who live in the most disadvantaged communities also suffer the most with chronic diseases. Use the options panels below to explore the relationship that social advantage and disadvantage has with health outcomes."
+  "Across the country, the most disadvantaged communities also suffer the most with chronic diseases. Use the options panels below to explore the relationship that social advantage and disadvantage has with health outcomes."
 )
 
 #################################################
