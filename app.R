@@ -360,7 +360,7 @@ server <- function(input, output, session) {
            y=paste(input$disease, "(%)"))
     (scatter)
   }, 
-  height = 700)
+  height = 670)
 
   output$socialIndexDescription <- renderText({
     socialIndexDescriptionHash(input$socialIndex)
