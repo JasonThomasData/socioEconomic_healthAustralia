@@ -175,7 +175,7 @@ ui <- fluidPage(
         font-size: 12px;
       }
       h1 {
-        font-size: 40px;
+        font-size: 30px;
         margin-left:50px;
       }
       #scatterPlot {
@@ -188,7 +188,7 @@ ui <- fluidPage(
       #optionsPanel {
         margin-left:50px;
       }
-      div.col-sm-2:nth-child(6) > form:nth-child(1) {
+      .col-sm-3 > form:nth-child(1) {
         margin-right:50px;
       }
       .container-fluid > div:nth-child(3) {
@@ -207,12 +207,7 @@ ui <- fluidPage(
         opacity: 0.5;
         background: #CCC;
       }
-      p {
-        margin: 0 0 9px;
-      }
-      body {
-        font-size: 11px;
-      }
+
     "))
   ),
   h1("The relationship between socio-economic indicators and chronic diseases, across Australia"),
@@ -226,7 +221,7 @@ ui <- fluidPage(
     ),
     br(),
     sidebarPanel(
-      h5("Variables"),
+      h4("Variables"),
       selectInput("population", label = "Population age", choices = c("All ages", "60 years and over", "70 years and over")),
       selectInput("disease", label = "Disease", choices = c("Three or more chronic conditions", "Asthma", "Diabetes", "Heart, stroke and vascular")),
       checkboxInput("lobf", "Include line of best fit", value = FALSE, width = NULL),
@@ -234,7 +229,7 @@ ui <- fluidPage(
       selectInput("socialIndex", label = "Social index", choices = c("ISRAD", "ISRD",  "IER", "IEO")),
       textOutput("socialIndexDescription"),
       br(),
-      h5("Location"),  
+      h4("Location"),  
       selectizeInput("focusOnSA2_1", label = "Focus on SA2:", choices = NULL,
                      selected = c("Taroona - Bonnet Hill"), multiple = TRUE, options = NULL),
       selectInput("state.territory", label = "State or territories", choices = c("All states and territories", "NSW", "Victoria", "Queensland", "SA", "WA", "Tasmania", "NT", "ACT")),
@@ -250,20 +245,16 @@ ui <- fluidPage(
     sidebarPanel(
       h4("Notes"),
       p("Some SA2 estimates were removed due to uncertainty relating to low sample sizes."),
-      br(),
       p("Each point in the chart represents an SA2 area. The ABS defines SA2 areas to, 'represent a community that interacts together socially and economically', (ABS, 2021)."),
-      br(),
       p("Remote territories outside of the mentioned states and territories were not included."),
-      br(),
       p("This app is optimised to run on 1080p FHD screens."),
-      width=2
+      br(),
+      h4("References"),
+      p("Australian Bureau of Statistics. (2020).", tags$i("National Health Survey: Small Area Estimates, 2017-18 - Australia"), ". ABS.", a("https://www.abs.gov.au/statistics/health/health-conditions-and-risks/national-health-survey/2017-18")),
+      p("Australian Bureau of Statistics. (2021).", tags$i("Statistical Area Level 2"), ". ABS.", a("https://www.abs.gov.au/statistics/standards/australian-statistical-geography-standard-asgs-edition-3/jul2021-jun2026")),
+      p("Australian Bureau of Statistics. (2023).", tags$i("Socio-Economic Indexes for Australia (SEIFA), 2021"), ". ABS.", a("https://www.abs.gov.au/statistics/people/people-and-communities/socio-economic-indexes-areas-seifa-australia/latest-release")),
+      width=3
     )
-  ),
-  tags$div(
-    h4("References"),
-    p("Australian Bureau of Statistics. (2020).", tags$i("National Health Survey: Small Area Estimates, 2017-18 - Australia"), ". ABS.", a("https://www.abs.gov.au/statistics/health/health-conditions-and-risks/national-health-survey/2017-18")),
-    p("Australian Bureau of Statistics. (2021).", tags$i("Statistical Area Level 2"), ". ABS.", a("https://www.abs.gov.au/statistics/standards/australian-statistical-geography-standard-asgs-edition-3/jul2021-jun2026")),
-    p("Australian Bureau of Statistics. (2023).", tags$i("Socio-Economic Indexes for Australia (SEIFA), 2021"), ". ABS.", a("https://www.abs.gov.au/statistics/people/people-and-communities/socio-economic-indexes-areas-seifa-australia/latest-release"))
   )
 )
 
@@ -369,7 +360,7 @@ server <- function(input, output, session) {
            y=paste(input$disease, "(%)"))
     (scatter)
   }, 
-  height = 630)
+  height = 740)
 
   output$socialIndexDescription <- renderText({
     socialIndexDescriptionHash(input$socialIndex)
