@@ -126,7 +126,7 @@ for (i in 1:nrow(mergedData)) {
 #head(mergedData)
 
 introCaptions <- c(
-  "Tasmania is Australia's smallest state by area and population. However, the people of Tasmania live a world apart in terms of access to opportunities and health outcomes. Click next to learn about the disparities that Tasmania faces.",
+  "Tasmania is Australia's smallest state by area and population. However, the people of Tasmania live a world apart in terms of access to opportunities and health outcomes. Click 'next' to learn about the economic and health inequalities that Tasmanians face.",
   "If you live in Taroona - Bonnet Hill (in Hobart) then you can expect to enjoy relatively high levels of social advantage in your community. Taroona - Bonnet Hill SA2 is highlighted below, in context of the national relationship between ISRAD and chronic disease.",
   "Tasmania's next largest city is Launceston, and the most advantaged community in Launceston is the centre of the city. The people of Launceston's city centre can expect about the same levels of chronic disease, compared to Taroona - Bonnet Hill.",
   "Just 4 kilometres away from Launceston's city centre is Ravenswood. Ranveswood is Tasmania's most disadvantaged community, across a range of socio-economic indicators. People in Ravenswood can expect many more people in their community to suffer with chronic diseases.",
