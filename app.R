@@ -98,13 +98,13 @@ controlButtons <- function(captionIndex) {
 ## DATA PREP
 
 # From the National Health Survey, split into different files, and observations removed for low values and missing data
-asthma <- read.csv("asthma.csv")
-diabetes <- read.csv("diabetes.csv")
-heart_stroke_vascular <- read.csv("heart_stroke_vascular.csv")
-three_or_more_chronic <- read.csv("three_or_more_chronic.csv")
+asthma <- read.csv("data/asthma.csv")
+diabetes <- read.csv("data/diabetes.csv")
+heart_stroke_vascular <- read.csv("data/heart_stroke_vascular.csv")
+three_or_more_chronic <- read.csv("data/three_or_more_chronic.csv")
 
 # SEIFA data for SA2 only
-SA2_SEIFA_2021 <- read.csv("SA2_SEIFA_2021.csv")
+SA2_SEIFA_2021 <- read.csv("data/SA2_SEIFA_2021.csv")
 
 #Remove duplicates
 diabetes <- diabetes[, -2]
