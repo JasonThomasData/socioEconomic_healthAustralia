@@ -142,8 +142,8 @@ ui <- fluidPage(
     tags$style(HTML("
       div.row:nth-child(1) {
         margin-left: 100px;
-        margin-bottom: 30px;
-        margin-top: 30px;
+        margin-bottom: 20px;
+        margin-top: 10px;
         padding: 10px;
         width: auto;
         display: inline-flex;
@@ -178,7 +178,6 @@ ui <- fluidPage(
         font-size: 40px;
         margin-left:50px;
       }
-
       #scatterPlot {
         height: 500px;
         width: 500px;
@@ -186,18 +185,15 @@ ui <- fluidPage(
       .bold-p {
         font-weight:700;
       }
-      
-     #optionsPanel {
+      #optionsPanel {
         margin-left:50px;
       }
-      
       div.col-sm-2:nth-child(6) > form:nth-child(1) {
         margin-right:50px;
       }
       .container-fluid > div:nth-child(3) {
         margin-left: 50px;
       }
-      
       .blink_this {
         animation: blinker 2s linear infinite;
       }
@@ -210,6 +206,12 @@ ui <- fluidPage(
         pointer-events: none;
         opacity: 0.5;
         background: #CCC;
+      }
+      p {
+        margin: 0 0 9px;
+      }
+      body {
+        font-size: 11px;
       }
     "))
   ),
@@ -224,7 +226,7 @@ ui <- fluidPage(
     ),
     br(),
     sidebarPanel(
-      h4("Variables"),
+      h5("Variables"),
       selectInput("population", label = "Population age", choices = c("All ages", "60 years and over", "70 years and over")),
       selectInput("disease", label = "Disease", choices = c("Three or more chronic conditions", "Asthma", "Diabetes", "Heart, stroke and vascular")),
       checkboxInput("lobf", "Include line of best fit", value = FALSE, width = NULL),
@@ -232,7 +234,7 @@ ui <- fluidPage(
       selectInput("socialIndex", label = "Social index", choices = c("ISRAD", "ISRD",  "IER", "IEO")),
       textOutput("socialIndexDescription"),
       br(),
-      h4("Location"),  
+      h5("Location"),  
       selectizeInput("focusOnSA2_1", label = "Focus on SA2:", choices = NULL,
                      selected = c("Taroona - Bonnet Hill"), multiple = TRUE, options = NULL),
       selectInput("state.territory", label = "State or territories", choices = c("All states and territories", "NSW", "Victoria", "Queensland", "SA", "WA", "Tasmania", "NT", "ACT")),
@@ -367,7 +369,7 @@ server <- function(input, output, session) {
            y=paste(input$disease, "(%)"))
     (scatter)
   }, 
-  height = 650)
+  height = 630)
 
   output$socialIndexDescription <- renderText({
     socialIndexDescriptionHash(input$socialIndex)
