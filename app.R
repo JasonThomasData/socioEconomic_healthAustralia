@@ -74,18 +74,33 @@ getSelectedLocations <- function(i) {
     preSelected <- c("Taroona - Bonnet Hill")
   } else if (i == 3) {
     preSelected <- c("Taroona - Bonnet Hill", "Launceston")
-  } else if (i == 4) {
-    preSelected <- c("Taroona - Bonnet Hill", "Ravenswood", "Launceston")
   } else {
     preSelected <- c("Taroona - Bonnet Hill", "Ravenswood", "Launceston")
   }
   (preSelected)
 }
 
+getSelectedState <- function(i) {
+  if (i == 1) {
+    state <- "Tasmania"
+  } else if (i == 2) {
+    state <- "Tasmania"
+  } else if (i == 3) {
+    state <- "Tasmania"
+  } else if (i == 4) {
+    state <- "Tasmania"
+  } else if (i == 5) {
+    state <- "WA"
+  } else {
+    state <- "All states and territories" 
+  }
+  (state)
+}
+
 controlButtons <- function(captionIndex) {
   if (captionIndex$data == 1) {
     addClass("backButton", "faded")
-  } else if (captionIndex$data == 5) {
+  } else if (captionIndex$data == 6) {
     addClass("nextButton", "faded")
     removeClass("optionsPanel", "disabled")
   } else {
@@ -126,11 +141,12 @@ for (i in 1:nrow(mergedData)) {
 #head(mergedData)
 
 introCaptions <- c(
-  "Tasmania is Australia's smallest state by area and population. However, the people of Tasmania live a world apart in terms of access to opportunities and health outcomes. Click 'next' to learn about the economic and health inequalities that Tasmanians face.",
-  "If you live in Taroona - Bonnet Hill (in Hobart) then you can expect to enjoy relatively high levels of social advantage in your community. Taroona - Bonnet Hill SA2 is highlighted below, in context of the national relationship between ISRAD and chronic disease.",
+  "Tasmania is Australia's smallest state by area and population. However, the people of Tasmania live a world apart in terms of their access to economic opportunities and their health outcomes. Click 'next' to learn about the economic and health inequalities that Tasmanians face.",
+  "If you live in Taroona - Bonnet Hill (in Hobart) then you can expect to enjoy relatively high levels of social advantage in your community. Taroona - Bonnet Hill SA2 is highlighted below, in context of the state relationship between ISRAD and chronic disease.",
   "Tasmania's next largest city is Launceston, and the most advantaged community in Launceston is the centre of the city. The people of Launceston's city centre can expect about the same levels of chronic disease, compared to Taroona - Bonnet Hill.",
-  "Just 4 kilometres away from Launceston's city centre is Ravenswood. Ranveswood is Tasmania's most disadvantaged community, across a range of socio-economic indicators. People in Ravenswood can expect many more people in their community to suffer with chronic diseases.",
-  "Use the options panels below to explore the relationship that social advantage and disadvantage has with health outcomes."
+  "Just 4 kilometres away from Launceston's city centre is Ravenswood. Ravenswood is Tasmania's most disadvantaged community, across a range of socio-economic indicators. People in Ravenswood can expect many more people in their community to suffer with chronic diseases.",
+  "Western Australia is the nation's largest state by area, but the story is the same. Where people live has a strong relationship with their health outcomes.",
+  "Across the country, people who live in the most disadvantaged communities also suffer the most with chronic diseases. Use the options panels below to explore the relationship that social advantage and disadvantage has with health outcomes."
 )
 
 #################################################
@@ -230,9 +246,8 @@ ui <- fluidPage(
       textOutput("socialIndexDescription"),
       br(),
       h4("Location"),  
-      selectizeInput("focusOnSA2_1", label = "Focus on SA2:", choices = NULL,
-                     selected = c("Taroona - Bonnet Hill"), multiple = TRUE, options = NULL),
-      selectInput("state.territory", label = "State or territories", choices = c("All states and territories", "NSW", "Victoria", "Queensland", "SA", "WA", "Tasmania", "NT", "ACT")),
+      selectizeInput("focusOnSA2_1", label = "Focus on SA2:", choices = NULL, selected = c("Taroona - Bonnet Hill"), multiple = TRUE, options = NULL),
+      selectInput("state.territory", label = "State or territories", choices = c("All states and territories", "NSW", "Victoria", "Queensland", "SA", "WA", "Tasmania", "NT", "ACT"), selected = "Tasmania"),
       checkboxInput("showSA2Labels", "Show SA2 Labels", value = TRUE, width = NULL),
       width = 4,
       class="disabled",
@@ -263,57 +278,57 @@ ui <- fluidPage(
 
 server <- function(input, output, session) {
   
-  observeEvent(input$state.territory, {
-    preSelected <- input$focusOnSA2_1
-    displaySA2Names <- getDisplaySA2Names(input)
-    updateSelectizeInput(session = getDefaultReactiveDomain(),
-                         inputId = 'focusOnSA2_1', 
-                         choices = c("None", displaySA2Names), 
-                         server = TRUE,
-                         selected = preSelected)
-  })
-  
   # SEQUENCE UPON LOAD
   
   captionIndex <- reactiveValues(data = 1)
   addClass("backButton", "faded")
+  updateSelectInput(session = getDefaultReactiveDomain(),
+                    inputId = 'state.territory',
+                    selected = "Tasmania")
   
   observeEvent(input$backButton, {
     if (captionIndex$data > 1) {
       captionIndex$data <- captionIndex$data - 1
+      
+      controlButtons(captionIndex)
+      
+      selectedState <- getSelectedState(captionIndex$data)
+      updateSelectInput(session = getDefaultReactiveDomain(),
+                        inputId = 'state.territory',
+                        selected = selectedState)
+      
       preSelected <- getSelectedLocations(captionIndex$data)
+      displaySA2Names <- getDisplaySA2Names(input)
+      updateSelectizeInput(session = getDefaultReactiveDomain(),
+                           inputId = 'focusOnSA2_1', 
+                           choices = c("None", displaySA2Names), 
+                           server = TRUE,
+                           selected = preSelected)
     }
-
-    controlButtons(captionIndex)
     
-    preSelected <- getSelectedLocations(captionIndex$data)
-    
-    displaySA2Names <- getDisplaySA2Names(input)
-    updateSelectizeInput(session = getDefaultReactiveDomain(),
-                         inputId = 'focusOnSA2_1', 
-                         choices = c("None", displaySA2Names), 
-                         server = TRUE,
-                         selected = preSelected)
   })
   
   observeEvent(input$nextButton, {
     removeClass("storyBox", "blink_this")
     
-    if (captionIndex$data < 5) {
+    if (captionIndex$data < 6) {
       captionIndex$data <- captionIndex$data + 1
+      controlButtons(captionIndex)
+      
+      selectedState <- getSelectedState(captionIndex$data)
+      updateSelectInput(session = getDefaultReactiveDomain(),
+                        inputId = 'state.territory',
+                        selected = selectedState)
+      
       preSelected <- getSelectedLocations(captionIndex$data)
+      displaySA2Names <- getDisplaySA2Names(input)
+      updateSelectizeInput(session = getDefaultReactiveDomain(),
+                           inputId = 'focusOnSA2_1', 
+                           choices = c("None", displaySA2Names), 
+                           server = TRUE,
+                           selected = preSelected)
     }
-    
-    controlButtons(captionIndex)
-    
-    preSelected <- getSelectedLocations(captionIndex$data)
 
-    displaySA2Names <- getDisplaySA2Names(input)
-    updateSelectizeInput(session = getDefaultReactiveDomain(),
-                         inputId = 'focusOnSA2_1', 
-                         choices = c("None", displaySA2Names), 
-                         server = TRUE,
-                         selected = preSelected)
   })
   
   output$introCaption <- renderText({
